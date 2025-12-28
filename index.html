@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App - Real-time Weather Forecast</title>
+    <meta name="description"
+        content="Get accurate real-time weather forecasts with air quality, UV index, and detailed weather information for any location worldwide.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Particle Effects Canvas -->
+    <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+    <div class="app">
+        <header>
+            <h2><i class="fa-solid fa-cloud-sun"></i> Weather</h2>
+            <div class="controls">
+                <button id="compareBtn" aria-label="Compare locations" title="Compare Locations"><i
+                        class="fa-solid fa-code-compare"></i></button>
+                <button id="toggleUnit" aria-label="Toggle temperature unit">°F</button>
+                <button id="toggleTheme" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+            </div>
+        </header>
+
+        <!-- Weather Alerts -->
+        <div class="weather-alerts" id="weatherAlerts"></div>
+
+        <!-- Saved Locations -->
+        <div class="saved-locations" id="savedLocations"></div>
+
+        <div class="search-wrapper">
+            <div class="search">
+                <input type="text" id="cityInput" placeholder="Search city..." autocomplete="off"
+                    aria-label="Search for a city">
+                <button id="voiceBtn" aria-label="Voice search"><i class="fa-solid fa-microphone"></i></button>
+                <button id="searchBtn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button id="locationBtn" aria-label="Use current location"><i
+                        class="fa-solid fa-location-crosshairs"></i></button>
+            </div>
+            <!-- Search History Dropdown -->
+            <div class="search-history" id="searchHistory"></div>
+        </div>
+
+        <div class="current" id="currentWeather"></div>
+
+        <!-- Air Quality & UV Index Section -->
+        <div class="environmental-info" id="environmentalInfo"></div>
+
+        <!-- Sunrise/Sunset Section -->
+        <div class="sun-info" id="sunInfo"></div>
+
+        <!-- Chart Controls -->
+        <div class="chart-controls">
+            <h3 class="forecast-title">Hourly Forecast</h3>
+            <div class="view-controls">
+                <div class="chart-type-selector">
+                    <button class="chart-type-btn active" data-type="temperature" aria-label="Temperature chart">
+                        <i class="fa-solid fa-temperature-half"></i> Temp
+                    </button>
+                    <button class="chart-type-btn" data-type="precipitation" aria-label="Precipitation chart">
+                        <i class="fa-solid fa-cloud-rain"></i> Rain
+                    </button>
+                    <button class="chart-type-btn" data-type="wind" aria-label="Wind speed chart">
+                        <i class="fa-solid fa-wind"></i> Wind
+                    </button>
+                </div>
+                <div class="view-type-selector">
+                    <button class="view-type-btn active" data-view="chart" aria-label="Chart view">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </button>
+                    <button class="view-type-btn" data-view="cards" aria-label="Cards view">
+                        <i class="fa-solid fa-grip"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container" id="chartContainer">
+            <canvas id="hourlyChart"></canvas>
+        </div>
+        <div class="hourly-cards-container" id="hourlyCardsContainer" style="display: none;"></div>
+
+        <h3 class="forecast-title">5-Day Forecast</h3>
+        <div class="forecast" id="forecast"></div>
+    </div>
+
+    <!-- Comparison Modal -->
+    <div class="comparison-modal" id="comparisonModal">
+        <div class="comparison-content">
+            <div class="comparison-header">
+                <h3><i class="fa-solid fa-code-compare"></i> Compare Locations</h3>
+                <button class="close-comparison" id="closeComparison" aria-label="Close comparison">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="comparison-grid" id="comparisonGrid"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
