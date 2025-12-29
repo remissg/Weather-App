@@ -1,6 +1,4 @@
-// API configuration - now using local server
-const API_BASE_URL = window.location.origin; // Use same origin as the page
-const USE_LOCAL_SERVER = true; // Set to false for direct API calls (not recommended)
+const API_KEY = "a432b1fa32253f651b73c5c5c096aee2";
 
 let isCelsius = true;
 let currentData = null;
@@ -150,7 +148,7 @@ async function getWeatherByCity(city) {
 
     showLoading();
     try {
-        const url = `${API_BASE_URL}/api/weather?city=${encodeURIComponent(city)}`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
         const data = await fetchData(url);
         currentData = data;
 
@@ -180,7 +178,7 @@ function getLocationWeather() {
         async (pos) => {
             try {
                 const { latitude, longitude } = pos.coords;
-                const url = `${API_BASE_URL}/api/weather?lat=${latitude}&lon=${longitude}`;
+                const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
                 const data = await fetchData(url);
                 currentData = data;
 
@@ -205,7 +203,7 @@ function getLocationWeather() {
 
 async function getForecast(lat, lon) {
     try {
-        const url = `${API_BASE_URL}/api/forecast?lat=${lat}&lon=${lon}`;
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
         const data = await fetchData(url);
 
         forecastEl.innerHTML = "";
@@ -378,7 +376,7 @@ function addSaveLocationButton(data) {
 
 async function getAirQuality(lat, lon) {
     try {
-        const url = `${API_BASE_URL}/api/air-pollution?lat=${lat}&lon=${lon}`;
+        const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
         const data = await fetchData(url);
 
         const qualityIndex = data.list[0].main.aqi;
@@ -389,7 +387,7 @@ async function getAirQuality(lat, lon) {
         const actualAQI = calculateAQI(pm25);
 
         // Get UV Index (using onecall API would be better, but requires different endpoint)
-        const uvUrl = `${API_BASE_URL}/api/onecall?lat=${lat}&lon=${lon}`;
+        const uvUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&appid=${API_KEY}`;
         let uvIndex = 0;
         try {
             const uvData = await fetchData(uvUrl);
@@ -549,7 +547,7 @@ let chart;
 
 async function getHourly(lat, lon) {
     try {
-        const url = `${API_BASE_URL}/api/forecast?lat=${lat}&lon=${lon}`;
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
         const data = await fetchData(url);
         hourlyData = data;
         updateChart(data);
@@ -785,7 +783,7 @@ async function loadSavedLocations() {
 
         // Fetch current temp
         try {
-            const url = `${API_BASE_URL}/api/weather?lat=${loc.lat}&lon=${loc.lon}`;
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&units=metric&appid=${API_KEY}`;
             const data = await fetchData(url);
             loc.temp = data.main.temp;
         } catch (e) {
