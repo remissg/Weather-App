@@ -122,7 +122,13 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Weather API server is running' });
 });
 
-app.listen(PORT, () => {
-    console.log(`🌤️  Weather API server is running on http://localhost:${PORT}`);
-    console.log(`📡 API endpoints available at http://localhost:${PORT}/api/*`);
-});
+// Only listen on port when running locally (not on Vercel)
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`🌤️  Weather API server is running on http://localhost:${PORT}`);
+        console.log(`📡 API endpoints available at http://localhost:${PORT}/api/*`);
+    });
+}
+
+// Export the Express app for Vercel serverless functions
+module.exports = app;
