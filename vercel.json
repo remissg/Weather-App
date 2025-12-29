@@ -4,18 +4,6 @@
         {
             "src": "server.js",
             "use": "@vercel/node"
-        },
-        {
-            "src": "*.html",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "*.css",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "*.js",
-            "use": "@vercel/static"
         }
     ],
     "routes": [
@@ -24,11 +12,12 @@
             "dest": "/server.js"
         },
         {
-            "src": "/(.*)",
+            "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico))",
             "dest": "/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
         }
-    ],
-    "env": {
-        "OPENWEATHER_API_KEY": "@openweather_api_key"
-    }
+    ]
 }
